@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>deco9er</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Press+Start+2P&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none !important;
+}
+
+:root {
+  --glow: #00ff88;
+  --glow2: #00cc6a;
+  --dark: #0a0f0a;
+  --card-bg: rgba(0, 255, 136, 0.03);
+  --card-border: rgba(0, 255, 136, 0.15);
+}
+
+body {
+  background: var(--dark);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* === CUSTOM CURSOR === */
+.cursor {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--glow);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transition: width 0.2s, height 0.2s, border-color 0.2s;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--glow);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+}
+
+.cursor.active {
+  width: 36px;
+  height: 36px;
+  border-color: #fff;
+}
+
+/* === PARTICLES === */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* === GRID === */
+.grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* === FLOATING NICKS === */
+.floating-nicks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.float-nick {
+  position: absolute;
+  font-family: 'Press Start 2P', monospace;
+  color: rgba(0, 255, 136, 0.06);
+  font-size: 12px;
+  white-space: nowrap;
+  animation: floatAround linear infinite;
+  user-select: none;
+}
+
+@keyframes floatAround {
+  0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* === CONTAINER === */
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+/* === HEADER === */
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+  animation: fadeInUp 1s ease;
+}
+
+.avatar-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+
+.avatar-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(var(--glow), transparent, var(--glow), transparent, var(--glow));
+  animation: rotateRing 4s linear infinite;
+}
+
+@keyframes rotateRing {
+  to { transform: rotate(360deg); }
+}
+
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatar-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  animation: counterSpin 4s linear infinite;
+}
+
+@keyframes counterSpin {
+  to { transform: rotate(-360deg); }
+}
+
+.name-pixel {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 28px;
+  color: #fff;
+  text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    0 0 20px rgba(0, 255, 136, 0.5);
+  letter-spacing: 4px;
+  margin-bottom: 15px;
+  animation: nameFlicker 5s infinite;
+}
+
+@keyframes nameFlicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.8; }
+  97% { opacity: 1; }
+  98% { opacity: 0.9; }
+}
+
+.subtitle {
+  font-size: 15px;
+  color: rgba(0, 255, 136, 0.5);
+  margin-top: 8px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.tagline {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 10px;
+}
+
+/* === OPENMOJI === */
+.om {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.om-sm { width: 22px; height: 22px; }
+.om-md { width: 28px; height: 28px; }
+.om-lg { width: 48px; height: 48px; }
+.om-xl { width: 56px; height: 56px; }
+
+/* === SECTIONS === */
+.section {
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease;
+}
+
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--glow);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--glow), transparent);
+}
+
+/* === CARDS === */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.05), transparent);
+  transition: left 0.5s ease;
+}
+
+.card:hover::before { left: 100%; }
+
+.card:hover {
+  border-color: rgba(0, 255, 136, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.1);
+}
+
+.card-icon { margin-bottom: 8px; }
+
+.card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--glow);
+  margin-bottom: 6px;
+}
+
+.card-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.4;
+}
+
+/* === CONTACTS === */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--glow);
+  transition: width 0.3s ease;
+}
+
+.contact-item:hover::after { width: 100%; }
+
+.contact-item:hover {
+  border-color: var(--glow);
+  color: var(--glow);
+  transform: translateX(3px);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+}
+
+.contact-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.contact-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.contact-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* === CHANNELS === */
+.channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.02), transparent);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.channel-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--glow);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.channel-item:hover::before { transform: scaleY(1); }
+
+.channel-item:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+  color: var(--glow);
+  transform: translateX(8px);
+}
+
+.channel-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.channel-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.channel-url {
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+/* === GITHUB === */
+.github-card {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.06), rgba(0, 0, 0, 0.4));
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 35px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.github-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.03) 0%, transparent 70%);
+  animation: githubGlow 6s ease-in-out infinite;
+}
+
+@keyframes githubGlow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(5%, 5%); }
+}
+
+.github-card:hover {
+  border-color: var(--glow);
+  box-shadow: 0 0 60px rgba(0, 255, 136, 0.15);
+}
+
+.github-icon {
+  margin-bottom: 15px;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.github-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--glow);
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.github-url {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.github-url:hover { color: var(--glow); }
+
+/* === FOOTER === */
+.footer {
+  text-align: center;
+  padding: 30px 0 15px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+.footer-line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glow), transparent);
+  margin: 0 auto 12px;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+
+/* === SCANLINE === */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 136, 0.003) 2px,
+    rgba(0, 255, 136, 0.003) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+/* === NOISE === */
+.noise {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.3;
+}
+
+@media (max-width: 600px) {
+  .name-pixel { font-size: 20px; letter-spacing: 2px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<canvas id="particles"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+<div class="noise"></div>
+<div class="floating-nicks" id="floatingNicks"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="avatar-wrapper">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <img src="https://raw.githubusercontent.com/deco9er/avatarka/main/photo_2026-04-28_20-26-18.jpg" alt="deco9er" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </div>
+    <div class="name-pixel">DECO9ER</div>
+    <div class="subtitle">Python разработчик</div>
+    <div class="tagline">Качественная разработка, быстро и в срок</div>
+  </div>
+
+  <!-- Специализация -->
+  <div class="section">
+    <div class="section-title">Специализация</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F916.svg" class="om om-md" alt=""></div>
+        <div class="card-title">Telegram боты</div>
+        <div class="card-text">Разработка ботов любой сложности: от чат-функционала до платежей и внешних API.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F4BB.svg" class="om om-md" alt=""></div>
+        <div class="card-title">Приложения</div>
+        <div class="card-text">Создание кроссплатформенных приложений для Windows, macOS, Linux.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F517.svg" class="om om-md" alt=""></div>
+        <div class="card-title">Интеграция API</div>
+        <div class="card-text">Обмен данными между сервисами (REST, GraphQL, WebSocket).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Контакты -->
+  <div class="section">
+    <div class="section-title">Контакты</div>
+    <div class="contact-grid">
+      <a href="https://t.me/deco9er" target="_blank" class="contact-item">
+        <div class="contact-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/2708.svg" class="om om-sm" alt=""></div>
+        <div>
+          <div class="contact-label">Telegram</div>
+          <div class="contact-value">@deco9er</div>
+        </div>
+      </a>
+      <a href="https://t.me/predldeco9erbot" target="_blank" class="contact-item">
+        <div class="contact-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/26A1.svg" class="om om-sm" alt=""></div>
+        <div>
+          <div class="contact-label">Бот предложений</div>
+          <div class="contact-value">@predldeco9erbot</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Каналы + Отзывы -->
+  <div class="section">
+    <div class="section-title">Каналы</div>
+    <div class="channel-list">
+      <a href="https://t.me/deco9erlive" target="_blank" class="channel-item">
+        <div class="channel-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F4E1.svg" class="om om-sm" alt=""></div>
+        <div>
+          <div class="channel-name">deco9erlive</div>
+          <div class="channel-url">t.me/deco9erlive</div>
+        </div>
+      </a>
+      <a href="https://t.me/decovpnchanal" target="_blank" class="channel-item">
+        <div class="channel-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F512.svg" class="om om-sm" alt=""></div>
+        <div>
+          <div class="channel-name">decovpnchanal</div>
+          <div class="channel-url">t.me/decovpnchanal</div>
+        </div>
+      </a>
+      <a href="https://t.me/deco9erots" target="_blank" class="channel-item">
+        <div class="channel-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F4AC.svg" class="om om-sm" alt=""></div>
+        <div>
+          <div class="channel-name">Отзывы</div>
+          <div class="channel-url">t.me/deco9erots</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- GitHub -->
+  <div class="section">
+    <div class="github-card">
+      <div class="github-icon"><img src="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/1F419.svg" class="om om-xl" alt=""></div>
+      <div class="github-name">GitHub</div>
+      <a href="https://github.com/deco9er" target="_blank" class="github-url">github.com/deco9er</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-line"></div>
+    <div>deco9er &bull; Все права защищены</div>
+  </div>
+
+</div>
+
+<script>
+// === CUSTOM CURSOR ===
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+const cursorTrail = document.getElementById('cursorTrail');
+let mouseX = 0, mouseY = 0;
+let trailX = 0, trailY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+  cursorDot.style.left = mouseX + 'px';
+  cursorDot.style.top = mouseY + 'px';
+});
+
+function animateTrail() {
+  trailX += (mouseX - trailX) * 0.15;
+  trailY += (mouseY - trailY) * 0.15;
+  cursorTrail.style.left = trailX + 'px';
+  cursorTrail.style.top = trailY + 'px';
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
+document.querySelectorAll('a, .card, .github-card, .channel-item, .contact-item').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+});
+
+// === PARTICLES ===
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.5;
+    this.speedY = (Math.random() - 0.5) * 0.5;
+    this.opacity = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0, 255, 136, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+function connectParticles() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(0, 255, 136, ${0.04 * (1 - dist / 100)})`;
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  connectParticles();
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// === FLOATING NICKS ===
+const nickContainer = document.getElementById('floatingNicks');
+function createFloatingNick() {
+  const nick = document.createElement('div');
+  nick.className = 'float-nick';
+  nick.textContent = 'deco9er';
+  nick.style.left = Math.random() * 100 + '%';
+  nick.style.fontSize = (Math.random() * 10 + 8) + 'px';
+  nick.style.animationDuration = (Math.random() * 15 + 15) + 's';
+  nick.style.animationDelay = Math.random() * 5 + 's';
+  nick.style.color = `rgba(0, 255, 136, ${Math.random() * 0.06 + 0.02})`;
+  nickContainer.appendChild(nick);
+  setTimeout(() => nick.remove(), 30000);
+}
+
+setInterval(createFloatingNick, 2500);
+for (let i = 0; i < 6; i++) setTimeout(createFloatingNick, i * 600);
+
+// === INTERSECTION OBSERVER ===
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section').forEach(s => {
+  s.style.opacity = '0';
+  s.style.transform = 'translateY(25px)';
+  s.style.transition = 'all 0.6s ease';
+  observer.observe(s);
+});
+
+// === TILT EFFECT ===
+document.querySelectorAll('.card, .github-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / 25;
+    const rotateY = (centerX - x) / 25;
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+</script>
+
+</body>
+</html>
