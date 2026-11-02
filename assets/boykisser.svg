@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360">
+<title>Бойкиссер</title>
+<g stroke="#0a0e0c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+<path fill="#e6eee8" d="M102 276 Q79 307 82 349 L280 349 Q282 305 252 276Z"/>
+<path fill="#e6eee8" d="M79 157 Q49 111 57 36 Q105 54 134 102 L159 89 154 111 182 93 177 113 Q202 97 229 107 Q260 57 310 40 Q313 115 286 161 L315 181 292 190 318 210 285 214 299 239 266 236 Q252 285 184 294 Q116 292 91 246 L58 250 73 225 43 216 68 198 46 182Z"/>
+<path fill="#afc0b4" stroke="none" d="M73 60 Q77 111 100 135 L117 111 Q100 78 73 60ZM293 65 Q265 82 246 119 L269 139 Q287 109 293 65Z"/>
+<path fill="none" d="M105 174 Q124 189 146 174 M217 174 Q239 190 258 170"/>
+<path fill="#0a0e0c" stroke="none" d="M119 181 Q112 211 126 212 Q141 211 136 182ZM228 183 Q222 212 236 212 Q251 211 245 179Z"/>
+<path fill="#0a0e0c" stroke-width="3" d="M174 217 Q183 212 192 217 L183 225Z"/>
+<path fill="none" stroke-width="5" d="M158 235 Q169 250 183 234 Q195 251 208 233"/>
+<path fill="none" stroke="#e6a6b7" stroke-width="5" d="M99 216 94 227 M112 218 107 230 M252 217 247 229 M265 213 260 225"/>
+<path fill="none" stroke-width="5" d="m149 296 15 15 18-12 16 14 17-17"/>
+</g>
+</svg>
