@@ -76,7 +76,7 @@ img { display: block; }
   border-radius: var(--r);
   isolation: isolate;
 }
-.boykisser { position: absolute; top: 80px; right: 40px; width: clamp(170px, 29cqw, 330px); height: auto; pointer-events: none; }
+.boykisser { position: absolute; top: 50%; right: 7.5%; transform: translateY(-50%); width: clamp(220px, 27cqw, 324px); height: auto; pointer-events: none; }
 .hero-top {
   grid-column: 1 / -1;
   display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 14px;
@@ -480,7 +480,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; padding
   .slide { padding: 24px; min-height: 0; }
   .num { position: static; display: block; text-align: right; margin-bottom: 20px; }
   .hero { min-height: 500px; padding: 24px; gap: 20px; }
-  .boykisser { top: 62px; right: 24px; width: 145px; }
+  .boykisser { top: 62px; right: 24px; transform: none; width: 145px; }
   .hero-name { padding-top: 130px; font-size: clamp(32px, 15.8cqw, 64px); margin-top: 32px; }
   .hero-role { font-size: clamp(14px, 4cqw, 22px); margin-bottom: 24px; }
   .who { grid-column: 1 / -1; }
@@ -524,7 +524,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; padding
 <main class="wrap" id="top">
   <section class="hero" aria-label="Обложка">
     <div class="hero-top"><span>Портфолио</span><span class="rule"></span><span>2026</span></div>
-    <img class="boykisser" src="assets/boykisser.svg" alt="Бойкиссер" width="360" height="360">
+    <img class="boykisser" src="assets/boykisser.png" alt="Бойкиссер" width="320" height="320">
     <h1 class="hero-name">deco9er</h1>
     <p class="hero-role"><em>Python</em> разработчик</p>
     <div class="who">
